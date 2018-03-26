@@ -34,7 +34,8 @@ df = pd.read_csv("csv-files/"+csv_file)
 df = df[['SC_CODE', 'SC_NAME', 'OPEN', 'HIGH', 'LOW', 'CLOSE']].copy()
 r = redis.Redis(host='localhost', port=6379, db=0)
 
-r.set("csv_file[0:-4]", df.to_msgpack(compress='zlib'))
-print(pd.read_msgpack(r.get("csv_file[0:-4]")).head())
+for index, row in df.iterrows():
+	r.hmset(row['SC_CODE'],row.to_dict())
+	r.set(row['SC_NAME'],row['SC_CODE'])
 
 
