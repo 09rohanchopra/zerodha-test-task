@@ -1,13 +1,18 @@
 import os
 import cherrypy
 import redis
-
+from jinja2 import Environment, FileSystemLoader
+env = Environment(loader=FileSystemLoader('media'))
 
 class HomePage:
 
 	@cherrypy.expose
 	def index(self):
-		return '''
+		tmpl = env.get_template('index.html')
+		return tmpl.render() 
+
+
+		'''
 			<p>Hi, this is the home page! Check out the other
 			fun stuff on this site:</p>
 			<form method="post" action="/search/">
@@ -62,7 +67,8 @@ class SearchPage:
 	@cherrypy.expose()
 	def index(self, search=""):
 		search = search.upper()
-		
+		for key in r.scan_iter("equity:"+search+"*"):
+			print(key)
 
 		return '''%s''' % (search)
 
