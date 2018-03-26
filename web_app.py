@@ -2,97 +2,56 @@ import os
 import cherrypy
 import redis
 from jinja2 import Environment, FileSystemLoader
+import operator
+
+
 env = Environment(loader=FileSystemLoader('media'))
 
 class HomePage:
 
 	@cherrypy.expose
-	def index(self):
-		tmpl = env.get_template('index.html')
-		return tmpl.render() 
-
-
-		'''
-			<p>Hi, this is the home page! Check out the other
-			fun stuff on this site:</p>
-			<form method="post" action="/search/">
-			  <input type="text" name="search" />
-			  <button type="submit">Search</button>
-			</form>
-			<ul>
-				<li><a href="/gain/">Top 10 Gainers</a></li>
-				<li><a href="/loose/">Top 10 Loosers</a></li>
-			</ul>'''
-
-
-class GainPage:
-
-	@cherrypy.expose
-	def index(self):
-		page_start = '''
-			<p>"Top 10 gainers: "</p>
-			<ul>
-			'''
-		page_end = '''
-		</ul>
-			<p>[<a href="../">Return</a>]</p>'''
-		page_mid=''
-
-		self.getGainers()
-		#for gainer in getGainers:
-		#	page_mid = page_mid + '''
-		#                <li>Top 10 Gainers</li>'''
-
-		return page_start + page_mid + page_end
-
-
-	def getGainers(self):
-		keys = r.get('*')
-		
-		print(keys)
-		print()
-
-
-
-class LoosePage:
-
-	@cherrypy.expose
-	def index(self):
-		return '''
-			<p>"Top 10 loosers: "</p>
-			<p>[<a href="../">Return</a>]</p>'''
-
-class SearchPage:
-
-	@cherrypy.expose()
 	def index(self, search=""):
-		search = search.upper()
-		for key in r.scan_iter("equity:"+search+"*"):
-			print(key)
+		tmpl = env.get_template('index.html')
+		self.loosers = []
+		i = 1
+		for key in r.scan_iter("loose:*"):
+			code = r.get(key)
+			item = r.hgetall(code).copy()
+			item['PERCENTAGE'] = float(item['PERCENTAGE'])
+			self.loosers.append(item.copy())
+		self.loosers.sort(key=operator.itemgetter('PERCENTAGE'))
 
-		return '''%s''' % (search)
+		self.gainers = []
+		i = 1
+		for key in r.scan_iter("gain:*"):
+			code = r.get(key)
+			item = r.hgetall(code).copy()
+			item['PERCENTAGE'] = float(item['PERCENTAGE'])
+			self.gainers.append(item.copy())
+		self.gainers.sort(key=operator.itemgetter('PERCENTAGE'), reverse = True)
+
+
+		if search != "":
+			search = search.upper()
+			for key in r.scan_iter("equity:"+search+"*"):
+				code = r.get(key)
+				r.hgetall(code)
+
+
+		
+		return tmpl.render(loosers = self.loosers, gainers = self.gainers) + search
 
 
 
 
-# Of course we can also mount request handler objects right here!
+
 root = HomePage()
-root.gain = GainPage()
-root.loose = LoosePage()
-root.search = SearchPage()
 
-# Remember, we don't need to mount ExtraLinksPage here, because
-# LinksPage does that itself on initialization. In fact, there is
-# no reason why you shouldn't let your root object take care of
-# creating all contained request handler objects.
 
 
 tutconf = os.path.join(os.path.dirname(__file__), 'tutorial.conf')
-r = redis.Redis(host='localhost', port=6379, db=0)
+r = redis.Redis(host='localhost', port=6379, db=0, charset="utf-8", decode_responses=True)
 
 if __name__ == '__main__':
-	# CherryPy always starts with app.root when trying to map request URIs
-	# to objects, so we need to mount a request handler root. A request
-	# to '/' will be mapped to HelloWorld().index().
 
 	cherrypy.quickstart(root, config=tutconf)
