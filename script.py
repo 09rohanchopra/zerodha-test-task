@@ -34,9 +34,10 @@ df = pd.read_csv("csv-files/"+csv_file)
 df = df[['SC_CODE', 'SC_NAME', 'OPEN', 'HIGH', 'LOW', 'CLOSE']].copy()
 r = redis.Redis(host='localhost', port=6379, db=0)
 
-df_compute = df.copy()
-df_compute['PERCENTAGE'] = (df['CLOSE'] - df['OPEN'])/ df['OPEN']
 
+df['PERCENTAGE'] = round(((df['CLOSE'] - df['OPEN'])/ df['OPEN'])*100, 2)
+
+df_compute = df.copy()
 
 df_gain = df_compute.nlargest(10,['PERCENTAGE']).copy()
 df_loose = df_compute.nsmallest(10,['PERCENTAGE']).copy()
