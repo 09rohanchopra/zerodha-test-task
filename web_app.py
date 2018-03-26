@@ -12,34 +12,34 @@ class HomePage:
 	@cherrypy.expose
 	def index(self, search=""):
 		tmpl = env.get_template('index.html')
+
+
 		self.loosers = []
-		i = 1
 		for key in r.scan_iter("loose:*"):
 			code = r.get(key)
-			item = r.hgetall(code).copy()
-			item['PERCENTAGE'] = float(item['PERCENTAGE'])
-			self.loosers.append(item.copy())
+			self.loosers.append(r.hgetall(code).copy())
+			
 		self.loosers.sort(key=operator.itemgetter('PERCENTAGE'))
 
+
 		self.gainers = []
-		i = 1
 		for key in r.scan_iter("gain:*"):
 			code = r.get(key)
-			item = r.hgetall(code).copy()
-			item['PERCENTAGE'] = float(item['PERCENTAGE'])
-			self.gainers.append(item.copy())
+			self.gainers.append(r.hgetall(code).copy())
+
 		self.gainers.sort(key=operator.itemgetter('PERCENTAGE'), reverse = True)
 
 
+		self.searchItems = []
 		if search != "":
 			search = search.upper()
 			for key in r.scan_iter("equity:"+search+"*"):
 				code = r.get(key)
-				r.hgetall(code)
+				self.searchItems.append(r.hgetall(code).copy())
 
 
 		
-		return tmpl.render(loosers = self.loosers, gainers = self.gainers) + search
+		return tmpl.render(loosers = self.loosers, gainers = self.gainers, search = self.searchItems) + search
 
 
 
