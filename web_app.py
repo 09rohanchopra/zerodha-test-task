@@ -48,16 +48,6 @@ class HomePage:
 root = HomePage()
 
 
-'''cherrypy.config.update({'server.socket_host': '0.0.0.0',})
-cherrypy.config.update({'server.socket_port': int(os.environ.get('PORT', '5000')),})
-cherrypy.config.update({
-            '/favicon.ico':
-            {
-                'tools.staticfile.on': True,
-                'tools.staticfile.filename': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'favicon.ico')
-            }
-        })
-'''
 config = {'global': {'server.socket_host':  '0.0.0.0',
                      'server.socket_port':  int(os.environ.get('PORT', '5000'))},
           '/favicon.ico': {'tools.staticfile.on':       True,
