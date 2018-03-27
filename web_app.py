@@ -18,7 +18,7 @@ class HomePage:
 		for key in r.scan_iter("loose:*"):
 			code = r.get(key)
 			self.loosers.append(r.hgetall(code).copy())
-			
+
 		self.loosers.sort(key=operator.itemgetter('PERCENTAGE'))
 
 
@@ -48,10 +48,11 @@ class HomePage:
 root = HomePage()
 
 
+cherrypy.config.update({'server.socket_host': '0.0.0.0',})
+cherrypy.config.update({'server.socket_port': int(os.environ.get('PORT', '5000')),})
 
-tutconf = os.path.join(os.path.dirname(__file__), 'tutorial.conf')
 r = redis.Redis(host='localhost', port=6379, db=0, charset="utf-8", decode_responses=True)
 
 if __name__ == '__main__':
 
-	cherrypy.quickstart(root, config=tutconf)
+	cherrypy.quickstart(root)
