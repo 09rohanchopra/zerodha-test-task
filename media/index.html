@@ -11,17 +11,17 @@
     </style>
     <title>Zerodha | Test Task | Rohan Chopra</title>
   </head>
-  <body>
+  <body style="background-color:#F7F5E6;">
     <div class="container">
       <div class="row justify-content-md-center top-buffer">
         <form class="form-inline" method="post">
             
             <div class="form-row">
             <div class="form-group col-md-10">
-              <input class="form-control form-control-lg" type="text" name="search" placeholder="Search...">
+              <input style="background-color:#F7F5E6;" class="form-control form-control-lg" type="text" name="search" placeholder="Search...">
             </div>
             <div class="form-group col-md-2">
-              <button type="submit" class="btn btn-primary">Search</button>
+              <button type="submit" class="btn btn-primary" style="background-color:#1FB58F;">Search</button>
             </div>
           </div>
         </form>
@@ -41,7 +41,7 @@
               <th >Percent</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody style="background-color:#EAB126;">
             {% for item in search %}
             <tr>
                <td >{{loop.index}}</td>
@@ -73,7 +73,7 @@
               <th >Percent</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody style="background-color:#1B7B34;">
             {% for item in gainers %}
             <tr>
                <td >{{loop.index}}</td>
@@ -103,7 +103,7 @@
               <th scope="col">Percent</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody style="background-color:#F24C4E;">
             {% for item in loosers %}
             <tr>
                <td scope="row">{{loop.index}}</td>
@@ -124,18 +124,15 @@
     </div>
 
       <!--Footer-->
-<footer class="page-footer font-small stylish-color-dark pt-4 mt-4">
+<footer class="page-footer font-small pt-4 mt-4" style="background-color:#272727;color:#fff;">
 
-    <!--Footer Links-->
     <div class="container text-center text-md-left">
         <div class="row">
 
-            <!--First column-->
             <div class="col-md-4">
                 <h5 class="text-uppercase mb-4 mt-3 font-weight-bold">Zerodha Test Task</h5>
                 <p>This web application solves the python test task given by zerodha. </p>
             </div>
-            <!--/.First column-->
 
             <hr class="clearfix w-100 d-md-none">
 
@@ -159,11 +156,8 @@
     </div>
 
     <hr>
-
-
 </footer>
-      
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
