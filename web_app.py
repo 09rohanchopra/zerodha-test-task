@@ -39,7 +39,7 @@ class HomePage:
 
 
 		self.last_updated = r.get("latest")
-		return tmpl.render(loosers = self.loosers, gainers = self.gainers, search = self.searchItems, last_updated = self.last_updated) + search
+		return tmpl.render(loosers = self.loosers, gainers = self.gainers, search = self.searchItems, last_updated = self.last_updated)
 
 
 
