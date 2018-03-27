@@ -48,7 +48,7 @@ class HomePage:
 root = HomePage()
 
 
-cherrypy.config.update({'server.socket_host': '0.0.0.0',})
+'''cherrypy.config.update({'server.socket_host': '0.0.0.0',})
 cherrypy.config.update({'server.socket_port': int(os.environ.get('PORT', '5000')),})
 cherrypy.config.update({
             '/favicon.ico':
@@ -57,11 +57,16 @@ cherrypy.config.update({
                 'tools.staticfile.filename': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'favicon.ico')
             }
         })
-print(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'favicon.ico'))
-print(os.listdir())
+'''
+config = {'global': {'server.socket_host':  '0.0.0.0',
+                     'server.socket_port':  int(os.environ.get('PORT', '5000'))},
+          '/favicon.ico': {'tools.staticfile.on':       True,
+                           'tools.staticfile.filename': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'favicon.ico')}}
+
+
 
 r = redis.from_url(os.environ.get("REDIS_URL"), charset="utf-8", decode_responses=True)
 
 if __name__ == '__main__':
 
-	cherrypy.quickstart(root)
+	cherrypy.quickstart(root, config=config)
