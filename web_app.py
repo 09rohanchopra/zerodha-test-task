@@ -54,11 +54,11 @@ cherrypy.config.update({
             '/favicon.ico':
             {
                 'tools.staticfile.on': True,
-                'tools.staticfile.filename': os.path.join(os.path.dirname(__file__),'favicon.ico')
+                'tools.staticfile.filename': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'favicon.ico')
             }
         })
-print(os.path.join(os.path.dirname(__file__),'favicon.ico'))
-
+print(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'favicon.ico'))
+print(os.listdir())
 
 r = redis.from_url(os.environ.get("REDIS_URL"), charset="utf-8", decode_responses=True)
 
