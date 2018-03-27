@@ -51,7 +51,7 @@ root = HomePage()
 cherrypy.config.update({'server.socket_host': '0.0.0.0',})
 cherrypy.config.update({'server.socket_port': int(os.environ.get('PORT', '5000')),})
 
-r = redis.Redis(host='localhost', port=6379, db=0, charset="utf-8", decode_responses=True)
+r = redis.from_url(os.environ.get("REDIS_URL"), charset="utf-8", decode_responses=True)
 
 if __name__ == '__main__':
 

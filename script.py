@@ -32,7 +32,7 @@ os.remove(zip_name)
 df = pd.read_csv("csv-files/"+csv_file)
 
 df = df[['SC_CODE', 'SC_NAME', 'OPEN', 'HIGH', 'LOW', 'CLOSE']].copy()
-r = redis.Redis(host='localhost', port=6379, db=0)
+r = redis.from_url(os.environ.get("REDIS_URL"))
 
 
 df['PERCENTAGE'] = round(((df['CLOSE'] - df['OPEN'])/ df['OPEN'])*100, 2)
