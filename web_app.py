@@ -27,7 +27,7 @@ class HomePage:
 			self.loosers.append(r.hgetall(code).copy())
 
 		#Sort list using percentage lost.
-		self.loosers.sort(key=operator.itemgetter('PERCENTAGE'))
+		self.loosers.sort(key=operator.itemgetter('PERCENTAGE'), reverse = True)
 
 		#Get list of 10 gainers.
 		self.gainers = []
