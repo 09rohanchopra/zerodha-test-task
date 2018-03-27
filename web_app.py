@@ -38,8 +38,8 @@ class HomePage:
 				self.searchItems.append(r.hgetall(code).copy())
 
 
-		
-		return tmpl.render(loosers = self.loosers, gainers = self.gainers, search = self.searchItems) + search
+		self.last_updated = r.get("latest")
+		return tmpl.render(loosers = self.loosers, gainers = self.gainers, search = self.searchItems, last_updated = self.last_updated) + search
 
 
 

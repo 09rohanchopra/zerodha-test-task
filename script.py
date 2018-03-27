@@ -58,3 +58,5 @@ for index, row in df_gain.iterrows():
 for index, row in df_loose.iterrows():
 	r.set("loose:"+row['SC_NAME'],row['SC_CODE'])
 
+r.set("latest",csv_file[0:-4])
+
