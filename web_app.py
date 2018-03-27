@@ -54,7 +54,7 @@ cherrypy.config.update({
             '/favicon.ico':
             {
                 'tools.staticfile.on': True,
-                'tools.staticfile.filename': 'favicon.ico'
+                'tools.staticfile.filename': os.path.join(os.path.dirname(__file__),'favicon.ico')
             }
         })
 
