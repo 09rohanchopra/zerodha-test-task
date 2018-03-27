@@ -50,6 +50,14 @@ root = HomePage()
 
 cherrypy.config.update({'server.socket_host': '0.0.0.0',})
 cherrypy.config.update({'server.socket_port': int(os.environ.get('PORT', '5000')),})
+cherrypy.config.update({
+            '/favicon.ico':
+            {
+                'tools.staticfile.on': True,
+                'tools.staticfile.filename': 'favicon.ico'
+            }
+        })
+
 
 r = redis.from_url(os.environ.get("REDIS_URL"), charset="utf-8", decode_responses=True)
 
